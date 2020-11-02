@@ -27,7 +27,8 @@ public class AddNewNote extends AppCompatActivity {
                     appDatabase.noteDao().insert(
                             new Note(binding.editTextTextPersonName.getText().toString())
                     );
-                   // appDatabase.notifyAll();
+                    appDatabase.notify();
+                    // appDatabase.notifyAll();
                     finish();
                 }
             }
