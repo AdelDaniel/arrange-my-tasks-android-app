@@ -9,11 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArrangeMyTasks">
-        <activity android:name=".AddNewNote"></activity>
+        <activity android:name=".NotificationView"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity android:name=".AddNewNote"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
