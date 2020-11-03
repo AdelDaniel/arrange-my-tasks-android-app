@@ -34,7 +34,7 @@ public class AddNewNote extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_note);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_new_note);
-        intiNotifications();
+
 
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,30 +46,14 @@ public class AddNewNote extends AppCompatActivity {
                     );
 
                     showNotification();
-                    synchronized(appDatabase){
+                    //synchronized(appDatabase){
                         appDatabase.notify();
-                    }
+                    //}
                     // appDatabase.notifyAll();
                     finish();
                 }
             }
         });
-    }
-
-    private void intiNotifications(){
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "channel_name";
-            String description = "channel_description";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("1", name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
     }
 
 
@@ -91,13 +75,32 @@ public class AddNewNote extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_baseline_add_alert_24)
                 .setContentTitle("Notification added ")
                 .setContentText("new Note added \n\n \t Note Name: " +noteName)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setFullScreenIntent (pendingIntent,true);
+                .setAutoCancel(true);
+                //.setFullScreenIntent (pendingIntent,true);
 
         notificationManager= NotificationManagerCompat.from(this);
         // notificationId is a unique int for each notification that you must define
         notificationManager.notify(1, builder.build());
+
+        /**----------------------------------------**/
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "channel_name";
+            String description = "channel_description";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("1", name, importance);
+            channel.setDescription(description);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                channel.setAllowBubbles(true);
+            }
+            channel.setShowBadge(true);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
