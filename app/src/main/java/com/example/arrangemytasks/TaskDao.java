@@ -9,19 +9,22 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface NoteDao {
+public interface TaskDao {
 
-    @Query("SELECT * FROM note")
-    List<Note> getAll();
+    @Query("SELECT * FROM Task")
+    List<Task> getAll();
 
     @Insert
-    void insert(Note note);
+    void insert(Task task);
 
     @Delete
-    void delete(Note note);
+    void delete(Task task);
 
 
     @Update
-    void update(Note note);
+    void update(Task task);
+
+    @Query("DELETE FROM Task")
+    void deleteAll();
 
 }

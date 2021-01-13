@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.arrangemytasks">
+    <!-- this permission used for listen when the phone start work -->
+    <!-- ..so if you restart your phone to not lose data -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +13,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArrangeMyTasks">
-        <activity android:name=".AddNewNote"></activity>
+        <activity android:name=".RingActivity"></activity>
+
+        <service
+            android:name=".TaskService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name=".MyReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+
+                <!-- when this action "i created"  is called then it will execute MyReceiver Class -->
+                <action android:name="com.example.ArrangeMyTask.ALARM" />
+
+                <!--
+                     when this action is called then it will execute MyReceiver Class
+                    "i am not created this Action it is fired when the phone start"
+                -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".AddNewTask" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

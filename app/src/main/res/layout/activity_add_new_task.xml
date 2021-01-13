@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AddNewTask"
+        android:layout_margin="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <TextView
+            android:id="@+id/textView_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:height="25dp"
+            android:textAlignment="center"
+            android:text="Press Here To Enter Time!" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <TimePicker
+            android:id="@+id/fragment_create_alarm_timePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:timePickerMode="spinner"/>
+
+        <EditText
+            android:id="@+id/editTextTaskName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter Task Name!"
+            android:inputType="textPersonName" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/fragment_create_alarm_one_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Only One"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/fragment_create_alarm_recurring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alarm Repeat" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/fragment_create_alarm_recurring_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_create_alarm_recurring">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible">
+                <CheckBox
+                    android:id="@+id/fragment_create_alarm_checkMon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mon" />
+
+                <CheckBox
+                    android:id="@+id/fragment_create_alarm_checkTue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tue" />
+
+
+                <CheckBox
+                    android:id="@+id/fragment_create_alarm_checkWed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wed" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+            <CheckBox
+                android:id="@+id/fragment_create_alarm_checkThu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thu" />
+                <CheckBox
+                    android:id="@+id/fragment_create_alarm_checkFri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fri" />
+
+                <CheckBox
+                    android:id="@+id/fragment_create_alarm_checkSat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sat" />
+
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/fragment_create_alarm_checkSun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sun" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.967" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
+</layout>

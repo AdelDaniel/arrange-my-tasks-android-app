@@ -16,33 +16,39 @@ import com.example.arrangemytasks.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
 
+    ActivityMainBinding binding;
+
+
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int notification_one = 101;
     private static final int notification_two = 102;
     Notification.Builder notificationBuilder;
     private NotificationHelper notificationHelper;
 
-    ActivityMainBinding binding ;
+
     AppDatabase appDatabase;
-    NoteAdapter noteAdapter;
+    TaskAdapter taskAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         appDatabase = AppDatabase.getInstance(this);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        noteAdapter = new NoteAdapter(this,appDatabase.noteDao().getAll());
-        binding.recyclerView.setAdapter(noteAdapter);
+        taskAdapter = new TaskAdapter(this, appDatabase.taskDao().getAll());
+        binding.recyclerView.setAdapter(taskAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,AddNewNote.class);
+                Intent intent = new Intent(MainActivity.this, AddNewTask.class);
                 startActivity(intent);
+                
 
-                postNotification(notification_one, "111111111111111111" );
+                postNotification(notification_one, "111111111111111111");
 //                goToNotificationSettings(NotificationHelper.CHANNEL_ONE_ID);
-               // postNotification(notification_two, "22222222");
+                // postNotification(notification_two, "22222222");
+
             }
         });
 
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case notification_two:
-                    notificationBuilder = notificationHelper.getNotification2(title,"TWO");
+                    notificationBuilder = notificationHelper.getNotification2(title, "TWO");
                     break;
             }
             if (notificationBuilder != null) {
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//Load the settings screen for the selected notification channel//
+    //Load the settings screen for the selected notification channel//
     public void goToNotificationSettings(String channel) {
         Intent i = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
         i.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
