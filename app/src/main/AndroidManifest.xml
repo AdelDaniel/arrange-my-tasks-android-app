@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.arrangemytasks">
     <!-- this permission used for listen when the phone start work -->
     <!-- ..so if you restart your phone to not lose data -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission
+        android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission-sdk-23 android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+
 
     <application
         android:allowBackup="true"
@@ -14,6 +24,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArrangeMyTasks">
+        <
+        <
+        <
+        <
+        <
+        <
+        < HEAD
+
         <activity android:name=".RingActivity"></activity>
 
         <service
@@ -40,11 +58,15 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".AddNewTask" />
+        <activity android:name=".AddNewTask" /><![CDATA[
+        =======
+
+        >>>>>>> addNotification
+
+        ]]>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

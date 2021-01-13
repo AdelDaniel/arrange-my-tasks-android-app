@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Arrange My Tasks</string>
+    <string name="notification_activity">NotificationView</string>
 </resources>
