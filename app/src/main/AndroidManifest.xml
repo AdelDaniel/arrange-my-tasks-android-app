@@ -4,6 +4,7 @@
     <!-- this permission used for listen when the phone start work -->
     <!-- ..so if you restart your phone to not lose data -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application

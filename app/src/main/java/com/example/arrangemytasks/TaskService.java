@@ -15,12 +15,15 @@ import androidx.core.app.NotificationCompat;
 import static com.example.arrangemytasks.MyReceiver.TITLE;
 
 public class TaskService extends Service {
-
+    //
     private static final String CHANNEL_ID = "1";
+    private NotificationHelper notificationHelper;
 
     public TaskService() {
     }
 
+    Intent notificationIntent;
+    PendingIntent pendingIntent;
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
 
@@ -28,6 +31,8 @@ public class TaskService extends Service {
     public void onCreate() {
         super.onCreate();
 
+
+        notificationHelper = new NotificationHelper(this);
         mediaPlayer = MediaPlayer.create(this, R.raw.alarm);
         mediaPlayer.setLooping(true);
 
@@ -36,25 +41,27 @@ public class TaskService extends Service {
         } else {
 
         }
+        notificationIntent = new Intent(this, RingActivity.class);
+        pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
 
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-//        Intent notificationIntent = new Intent(this, RingActivity.class);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-//
-//        String alarmTitle = String.format("%s Alarm", intent.getStringExtra(TITLE));
-//
-//        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-//                .setContentTitle(alarmTitle)
-//                .setContentText("Ring Ring .. Ring Ring")
-//                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
-//                .setContentIntent(pendingIntent)
-//                .build();
-////        startForeground(1, notification);
 
+        String alarmTitle = String.format("%s Alarm", intent.getStringExtra(TITLE));
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(alarmTitle)
+                .setContentText("Ring Ring .. Ring Ring")
+                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
+                .setContentIntent(pendingIntent)
+                .build();
+
+        startForeground(1, notification);
+        // notificationHelper.postNotification(NotificationHelper.notification_one, "adel");
         mediaPlayer.start();
+
 
         long[] pattern = {0, 100, 1000};
         vibrator.vibrate(pattern, 0);
