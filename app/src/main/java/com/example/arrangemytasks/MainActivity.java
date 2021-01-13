@@ -12,24 +12,24 @@ import com.example.arrangemytasks.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding ;
+    ActivityMainBinding binding;
     AppDatabase appDatabase;
-    NoteAdapter noteAdapter;
+    TaskAdapter taskAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         appDatabase = AppDatabase.getInstance(this);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        noteAdapter = new NoteAdapter(this,appDatabase.noteDao().getAll());
-        binding.recyclerView.setAdapter(noteAdapter);
+        taskAdapter = new TaskAdapter(this, appDatabase.taskDao().getAll());
+        binding.recyclerView.setAdapter(taskAdapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,AddNewNote.class);
+                Intent intent = new Intent(MainActivity.this, AddNewTask.class);
                 startActivity(intent);
-
             }
         });
     }
