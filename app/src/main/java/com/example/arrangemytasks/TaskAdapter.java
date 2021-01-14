@@ -14,69 +14,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-//
-//public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
-//
-//    List<Task> allTasks;
-//    Context context;
-//
-//    // Provide a suitable constructor (depends on the kind of dataSet)
-//    public TaskAdapter(Context context, List<Task> allTasks) {
-//        this.allTasks = allTasks;
-//        this.context = context;
-//    }
-//
-//    // Provide a reference to the views for each data item
-//    // Complex data items may need more than one view per item, and
-//    // you provide access to all the views for a data item in a view holder
-//    public static class TaskHolder extends RecyclerView.ViewHolder {
-//        // each data item is just a string in this case
-//        public TextView nameTextView;
-//        public TaskHolder(@NonNull View view) {
-//            super(view);
-//            nameTextView = view.findViewById(R.id.name_text_view);
-//        }
-//    }
-//
-//    // Create new views (invoked by the layout manager)
-//    @NonNull
-//    @Override
-//    public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
-//
-//        return new TaskHolder(view);
-//    }
-//
-//
-//    // Replace the contents of a view (invoked by the layout manager)
-//    @Override
-//    public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
-//
-//        // - get element from your dataset at this position
-//        // - replace the contents of the view with that element
-//        holder.nameTextView.setText(allTasks.get(position).getTitle() );
-//    }
-//
-//
-//    // Return the size of your dataset (invoked by the layout manager)
-//    @Override
-//    public int getItemCount() {
-//        return allTasks.size();
-//    }
-//
-//}
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
 
     List<Task> allTasks;
     Context context;
 
+    // Provide a suitable constructor (depends on the kind of dataSet)
     public TaskAdapter(Context context, List<Task> allTasks) {
         this.allTasks = allTasks;
         this.context = context;
     }
 
 
+    // Create new views (invoked by the layout manager)
     @NonNull
     @Override
     public TaskHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -84,24 +35,26 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskHolder> {
         return new TaskHolder(itemView);
     }
 
+    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
+        // - get element from your dataSet at this position
+        // - replace the contents of the view with that element
         Task task = allTasks.get(position);
         holder.bind(task);
     }
 
 
+    // Return the size of your dataSet (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return allTasks.size();
     }
 
-    public void setAlarms(List<Task> allTasks) {
-        this.allTasks = allTasks;
-        notifyDataSetChanged();
-    }
 
-
+    // Provide a reference to the views for each data item
+// Complex data items may need more than one view per item, and
+// you provide access to all the views for a data item in a view holder
     public class TaskHolder extends RecyclerView.ViewHolder {
         private TextView alarmTime;
         private ImageView alarmRecurring;

@@ -33,8 +33,11 @@ public class AddNewTask extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 scheduleAlarm();
+
                 appDatabase.notify();
                 finish();
+                
+
             }
         });
 
@@ -50,18 +53,6 @@ public class AddNewTask extends AppCompatActivity {
                 }, 1, 1, false).show();
             }
         });
-//        binding.fragmentCreateAlarmTimePicker.setOnClickListener(new View.OnClickListener() {
-//            @SuppressLint("SetTextI18n")
-//            @RequiresApi(api = Build.VERSION_CODES.M)
-//            @Override
-//            public void onClick(View v) {
-//
-//                        binding.textViewTime.setText( "time: "+binding.fragmentCreateAlarmTimePicker.getHour()
-//                                +":" + binding.fragmentCreateAlarmTimePicker.getMinute() );
-//
-//                }
-//
-//        });
 
         binding.fragmentCreateAlarmRecurring.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

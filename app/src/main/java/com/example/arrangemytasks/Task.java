@@ -105,7 +105,7 @@ public class Task implements Serializable {
             String toastText = null;
             try {
                 toastText = String.format(
-                        "One Time Alarm %s scheduled for %s at %02d:%02d", title, hour, calendar.get(Calendar.DAY_OF_WEEK), minute, taskId);
+                        "One Time Alarm: %s \n scheduled for %s at %02d:%02d", title, hour, calendar.get(Calendar.DAY_OF_WEEK), minute, taskId);
             } catch (Exception e) {
                 e.printStackTrace();
             }

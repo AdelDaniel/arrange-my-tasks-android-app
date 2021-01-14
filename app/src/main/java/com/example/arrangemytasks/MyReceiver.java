@@ -29,11 +29,10 @@ public class MyReceiver extends BroadcastReceiver {
             if (!intent.getBooleanExtra(RECURRING, false)) {
                 startAlarmService(context, intent);
             }
-            {
-                if (alarmIsToday(intent)) {
-                    startAlarmService(context, intent);
-                }
+            if (alarmIsToday(intent)) {
+                startAlarmService(context, intent);
             }
+
         }
         // an Intent broadcast.
         //  throw new UnsupportedOperationException("Not yet implemented");
@@ -110,6 +109,5 @@ public class MyReceiver extends BroadcastReceiver {
             context.startService(intentService);
         }
     }
-//
 
 }

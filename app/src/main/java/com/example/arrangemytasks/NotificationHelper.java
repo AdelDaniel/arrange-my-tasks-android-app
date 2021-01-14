@@ -12,121 +12,84 @@ import android.os.Build;
 import android.provider.Settings;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 class NotificationHelper extends ContextWrapper {
-    private NotificationManager notifyManager;
+    private NotificationManager notificationManager;
     Intent notificationIntent;
     PendingIntent pendingIntent;
     Notification.Builder notificationBuilder;
+    NotificationChannel notificationChannel;
+
 
     public static final String CHANNEL_ONE_ID = "com.adel.task.ringTime";
     public static final String CHANNEL_ONE_NAME = "Ring Time : Time to do Task Channel One";
-
-    public static final String CHANNEL_TWO_ID = "myapplication.TWO";
-    public static final String CHANNEL_TWO_NAME = "Channel Two";
-
-
     public static final int notification_one = 101;
-    public static final int notification_two = 102;
-
-//Create your notification channels//
 
     public NotificationHelper(Context base) {
         super(base);
         createChannels();
     }
 
+    //Create your notification channels//
     public void createChannels() {
-
         notificationIntent = new Intent(this, RingActivity.class);
         pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-        // String alarmTitle = String.format("%s Alarm", intent.getStringExtra(TITLE));
-        NotificationChannel notificationChannel;
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             notificationChannel = new NotificationChannel(CHANNEL_ONE_ID,
-                    CHANNEL_ONE_NAME, notifyManager.IMPORTANCE_HIGH);
+                    CHANNEL_ONE_NAME, notificationManager.IMPORTANCE_NONE);
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.RED);
             notificationChannel.setShowBadge(true);
             notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
-            getManager().createNotificationChannel(notificationChannel);
+            createNotificationManager();
         } else {
-
-
+            // If earlier version channel ID is not used
+            // https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html#NotificationCompat.Builder(android.content.Context)
         }
-
-
-        NotificationChannel notificationChannel2;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            notificationChannel2 = new NotificationChannel(CHANNEL_TWO_ID,
-                    CHANNEL_TWO_NAME, notifyManager.IMPORTANCE_DEFAULT);
-            notificationChannel2.enableLights(false);
-            notificationChannel2.enableVibration(true);
-            notificationChannel2.setLightColor(Color.RED);
-            notificationChannel2.setShowBadge(false);
-            getManager().createNotificationChannel(notificationChannel2);
-        }
-
 
     }
 
-    //Create the notification that’ll be posted to Channel One//
-    public Notification.Builder getNotification1(String title, String body) {
+
+    Notification notification;
+
+    //Post the notifications//
+    public void postNotification(String title, String body) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return new Notification.Builder(getApplicationContext(), CHANNEL_ONE_ID)
+            notificationBuilder = new Notification.Builder(getApplicationContext(), CHANNEL_ONE_ID)
                     .setContentTitle(title)
                     .setContentText(body + "\n Ring Ring .. Ring Ring")
                     .setSmallIcon(R.drawable.ic_alarm_black_24dp)
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true);
-        } else {
-            return null;
+                    .setContentIntent(pendingIntent);
         }
-
-    }
-
-    //Create the notification that’ll be posted to Channel Two//
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public Notification.Builder getNotification2(String title, String body) {
-        return new Notification.Builder(getApplicationContext(), CHANNEL_TWO_ID)
+        notification = notificationBuilder.setOngoing(true)
                 .setContentTitle(title)
-                .setContentText(body)
-                .setSmallIcon(R.drawable.alert)
-                .setAutoCancel(true);
-
+                .setContentText(body + "\n Ring Ring .. Ring Ring")
+                .setSmallIcon(R.drawable.ic_alarm_black_24dp)
+                .setPriority(Notification.PRIORITY_MIN)
+                .setContentIntent(pendingIntent)
+                .build();
     }
 
-
-    public void notify(int id, Notification.Builder notification) {
-        getManager().notify(id, notification.build());
+    public Notification getNotification() {
+        return notification;
     }
+//
+//    public void notify(int id, Notification.Builder notification) {
+//        getManager().notify(id, notification.build());
+//    }
+//
+
 
     //Send your notifications to the NotificationManager system service//
-    private NotificationManager getManager() {
-        if (notifyManager == null) {
-            notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createNotificationManager() {
+        if (notificationManager == null) {
+            notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         }
-        return notifyManager;
-    }
-
-    //Post the notifications//
-    public void postNotification(int id, String title) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            switch (id) {
-                case notification_one:
-                    notificationBuilder = getNotification1(title, "ONE");
-                    break;
-
-                case notification_two:
-                    notificationBuilder = getNotification2(title, "TWO");
-                    break;
-            }
-            notificationBuilder.build();
-            if (notificationBuilder != null) {
-                notify(id, notificationBuilder);
-            }
-        }
+        notificationManager.createNotificationChannel(notificationChannel);
     }
 
     //Load the settings screen for the selected notification channel//
